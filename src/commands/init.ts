@@ -8,6 +8,7 @@ import {getAssetFile} from '../utils'
 import chalk from 'chalk'
 import getPort from 'get-port'
 import inquirer from 'inquirer'
+import {latest} from '../constants'
 
 export type StudioInitOptions = {
   dir: string
@@ -27,10 +28,10 @@ export const studioInit = new Command()
   .description('Initializes an analysis folder for a ')
   .argument('<projectID>', 'the name of the project and the name of the folder that will be generated')
   .option('-d, --dir <dir>', `the folder where to create the ${chalk.yellow('\${projectID}')} folder`, process.cwd())
-  .option('-ct, --chronos-tag <chronosTag>', 'the chronos docker tag', 'latest')
+  .option('-ct, --chronos-tag <chronosTag>', 'the chronos docker tag', latest)
   .option('-cp, --chronos-port <chronosPort>', 'the chronos port')
 
-  .option('-c1t, --chronos1-tag <chronos1Tag>', 'the chronos1 docker tag', 'latest')
+  .option('-c1t, --chronos1-tag <chronos1Tag>', 'the chronos1 docker tag', latest)
   .option('-c1p, --chronos1-port <chronos1Port>', 'the chronos1 port')
 
 

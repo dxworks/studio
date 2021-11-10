@@ -1,10 +1,14 @@
 {
   "name": "@dxworks/studio",
   "version": "0.1.0",
-  "description": "A cli utility to create voyager releases",
+  "description": "A cli utility to create dxw projects with chronos",
   "keywords": [
-    "cli",
-    "voyager"
+    "dxworks",
+    "dxw",
+    "plugin",
+    "orchestation",
+    "docker",
+    "studio"
   ],
   "homepage": "https://github.com/dxworks/cli#readme",
   "bugs": {
@@ -61,6 +65,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "jest": "^27.2.4",
+    "json": "^11.0.0",
     "rimraf": "^3.0.2",
     "sort-package-json": "^1.52.0",
     "ts-jest": "^27.0.5",

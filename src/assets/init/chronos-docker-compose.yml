@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  chronos2:
+    image: {chronosDockerRegistry}/chronos:{chronosTag}
+    restart: always
+    ports:
+      - {chronosPort}:8081
+    volumes:
+      - ./data/chronos2:/root/chronos2
+    networks:
+      - {network}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{projectID}-chronos2.entrypoints=web,web-secured
+      - traefik.http.routers.{projectID}-chronos2.rule=Host(`chronos.{projectID}.localhost`)
+      - traefik.http.middlewares.chronospathstrip.stripprefix.prefixes=/chronos
+      - traefik.http.middlewares.chronospathadd.addprefix.prefix=/chronos
+      - traefik.http.routers.{projectID}-chronos2.middlewares=chronospathstrip@docker,chronospathadd@docker
+      - traefik.http.routers.{projectID}-chronos2.service={projectID}-chronos2
+      - traefik.http.services.{projectID}-chronos2.loadbalancer.server.port=8081
+      - traefik.docker.network={network}
+      - traefik.http.routers.{projectID}-chronos2.tls=true
+      - traefik.http.routers.{projectID}-chronos2.tls.certresolver=default
+
+  chronos1:
+    image: {chronosDockerRegistry}/chronos1:{chronos1Tag}
+    restart: always
+    ports:
+      - {chronos1Port}:8080
+    volumes:
+      - ./data/chronos:/root/chronos
+    networks:
+      - {network}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{projectID}-chronos1.entrypoints=web,web-secured
+      - traefik.http.routers.{projectID}-chronos1.rule=Host(`chronos1.{projectID}.localhost`)
+      - traefik.http.middlewares.chronos1pathstrip.stripprefix.prefixes=/chronos
+      - traefik.http.middlewares.chronos1pathadd.addprefix.prefix=/chronos
+      - traefik.http.routers.{projectID}-chronos1.middlewares=chronos1pathstrip@docker,chronos1pathadd@docker
+      - traefik.http.routers.{projectID}-chronos1.service={projectID}-chronos1
+      - traefik.http.services.{projectID}-chronos1.loadbalancer.server.port=8080
+      - traefik.docker.network={network}
+      - traefik.http.routers.{projectID}-chronos1.tls=true
+      - traefik.http.routers.{projectID}-chronos1.tls.certresolver=default
+
+networks:
+  {network}:
+    external: true

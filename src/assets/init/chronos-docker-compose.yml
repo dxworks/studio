@@ -3,7 +3,7 @@ version: "3.8"
 services:
   chronos2:
     image: {chronosDockerRegistry}/chronos:{chronosTag}
-    restart: always
+    restart: unless-stopped
     ports:
       - {chronosPort}:8081
     volumes:
@@ -25,7 +25,7 @@ services:
 
   chronos1:
     image: {chronosDockerRegistry}/chronos1:{chronos1Tag}
-    restart: always
+    restart: unless-stopped
     ports:
       - {chronos1Port}:8080
     volumes:

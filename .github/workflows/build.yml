@@ -13,15 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Extract Semver
-        id: semver_parser
-        run: |
-          semver=${TAG#"refs/tags/v"}
-          semver=${semver%"-voyager"}
-          echo ::set-output name=semver::$semver
-        env:
-          TAG: ${{ github.ref }}
-
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
@@ -30,7 +21,7 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@dxworks'
 
-      - name: Prepare Node App
+      - name: Build Node App
         run: |
           npm install
           npm run create

@@ -1,7 +1,7 @@
 {
   "name": "@dxworks/studio",
   "version": "0.1.0",
-  "description": "A cli utility to create dxw projects with chronos",
+  "description": "A cli utility to create dxw projects with chronos and other tools",
   "keywords": [
     "dxworks",
     "dxw",
@@ -10,13 +10,13 @@
     "docker",
     "studio"
   ],
-  "homepage": "https://github.com/dxworks/cli#readme",
+  "homepage": "https://github.com/dxworks/studio#readme",
   "bugs": {
-    "url": "https://github.com/dxworks/cli/issues"
+    "url": "https://github.com/dxworks/studio/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dxworks/cli.git"
+    "url": "git+https://github.com/dxworks/studio.git"
   },
   "license": "Apache-2.0",
   "author": "Mario Rivis <mario.rivis@gmail.com>",

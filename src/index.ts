@@ -2,4 +2,6 @@
 
 import {studioCommand} from './studio'
 
-studioCommand.parse(process.argv)
+studioCommand
+  .parse(process.argv)
+

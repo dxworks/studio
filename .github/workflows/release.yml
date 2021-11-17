@@ -42,6 +42,7 @@ jobs:
           node_modules/.bin/json -I -f package.json -e "this.version='$VERSION'"
         env:
           VERSION: ${{ steps.semver_parser.outputs.semver }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish NPM
         run: npm publish

@@ -25,4 +25,7 @@ jobs:
         run: |
           npm install
           npm run create
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 

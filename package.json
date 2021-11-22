@@ -82,7 +82,7 @@
     "commands": [
       {
         "file": "dist/studio.js",
-        "command": "studio.js"
+        "command": "studioCommand"
       }
     ]
   }

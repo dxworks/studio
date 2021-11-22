@@ -30,6 +30,14 @@ export const studioStop = new Command()
   .option('-f, --file <project>', 'the docker-compose file to run')
   .action(stop)
 
+export const studioUpdate = new Command()
+    .name('update')
+    .aliases(['pull'])
+    .description('Updates the latest docker images')
+    .option('-p, --project <project>', `the folder where to create the ${chalk.yellow('${projectID}')} folder`, process.cwd())
+    .option('-f, --file <project>', 'the docker-compose file to run')
+    .action(pull)
+
 function validateProjectFolder(options: StudioStartOptions): { projectID: string, location: string } {
   if (!folderIsValidProject(options.project)) {
     log.warn(`Folder ${options.project} is not a valid studio project folder, checking if it is a valid project name`)
@@ -86,6 +94,16 @@ function stop(services: string[], options: StudioStartOptions) {
   const dockerComposeFilePath = getDockerComposeFilePath(options, location)
 
   const command = `docker-compose -f ${dockerComposeFilePath} down ${services.join(' ')}`
+  const cwd = path.dirname(dockerComposeFilePath)
+  log.info(`Running command ${chalk.yellow(command)} in ${chalk.yellow(cwd)}`)
+  execSync(command, {cwd: cwd, stdio: 'inherit'})
+}
+
+function pull(options: StudioStartOptions) {
+  const {location} = validateProjectFolder(options)
+  const dockerComposeFilePath = getDockerComposeFilePath(options, location)
+
+  const command = `docker-compose -f ${dockerComposeFilePath} pull`
   const cwd = path.dirname(dockerComposeFilePath)
   log.info(`Running command ${chalk.yellow(command)} in ${chalk.yellow(cwd)}`)
   execSync(command, {cwd: cwd, stdio: 'inherit'})

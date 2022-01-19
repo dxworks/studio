@@ -38,7 +38,8 @@
     "local": "npm run build && npm link && npx dx-studio --help",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
     "test": "jest --passWithNoTests",
-    "test:dev": "jest --watch"
+    "test:dev": "jest --watch",
+    "dev": "ts-node src/index.ts"
   },
   "dependencies": {
     "@dxworks/cli-common": "^0.0.20",

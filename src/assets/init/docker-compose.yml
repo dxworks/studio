@@ -45,6 +45,46 @@ services:
       - traefik.http.routers.{projectID}-chronos1.tls=true
       - traefik.http.routers.{projectID}-chronos1.tls.certresolver=default
 
+  illustry_mongo:
+    image: mongo:5
+    restart: unless-stopped
+    volumes:
+      - ./data/illustry_mongo:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootPass
+      MONGO_INITDB_DATABASE: illustry-database
+    networks:
+      - {projectID}-illustry-network
+
+  illustry:
+    image: dxworks/illustry:{illustryTag}
+    restart: unless-stopped
+    ports:
+      - {illustryPort}:7000
+    environment:
+      MONGODB_CONNECTION_URI: mongodb://illustry_mongo:27017
+      MONGODB_USER: root
+      MONGODB_PASSWORD: rootPass
+      MONGODB_DBNAME: illustry-database
+    depends_on:
+      - illustry_mongo
+    networks:
+      - {projectID}-illustry-network
+      - {network}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.illustry.entrypoints=web,web-secured
+      - traefik.http.routers.illustry.rule=Host(`illustry.{projectID}.localhost`)
+      - traefik.http.routers.illustry.service=illustry
+      - traefik.http.services.illustry.loadbalancer.server.port=7000
+      - traefik.docker.network={network}
+      - traefik.http.routers.illustry.tls=true
+      - traefik.http.routers.illustry.tls.certresolver=default
+
 networks:
   {network}:
     external: true
+  {projectID}-illustry-network:
+    driver: bridge

@@ -17,8 +17,8 @@ export const studioStart = new Command()
   .aliases(['up'])
   .description('Starts services for a specified project')
   .argument('[services...]', 'the name of the project and the name of the folder that will be generated', [])
-  .option('-p, --project <project>', `the folder where to create the ${chalk.yellow('${projectID}')} folder`, process.cwd())
-  .option('-f, --file <project>', 'the docker-compose file to run')
+  .option('-p, --project <project>', 'the name of the project to start', process.cwd())
+  .option('-f, --file <file>', 'the docker-compose file to use')
   .action(start)
 
 export const studioStop = new Command()
@@ -26,16 +26,16 @@ export const studioStop = new Command()
   .aliases(['down'])
   .description('Stops services for a specified project')
   .argument('[services...]', 'the name of the project and the name of the folder that will be generated', [])
-  .option('-p, --project <project>', `the folder where to create the ${chalk.yellow('${projectID}')} folder`, process.cwd())
-  .option('-f, --file <project>', 'the docker-compose file to run')
+  .option('-p, --project <project>', 'the name of the project to stop', process.cwd())
+  .option('-f, --file <file>', 'the docker-compose file to use')
   .action(stop)
 
 export const studioUpdate = new Command()
     .name('update')
     .aliases(['pull'])
     .description('Updates the latest docker images')
-    .option('-p, --project <project>', `the folder where to create the ${chalk.yellow('${projectID}')} folder`, process.cwd())
-    .option('-f, --file <project>', 'the docker-compose file to run')
+    .option('-p, --project <project>', 'the name of the project to update', process.cwd())
+    .option('-f, --file <file>', 'the docker-compose file to use')
     .action(pull)
 
 function validateProjectFolder(options: StudioStartOptions): { projectID: string, location: string } {
@@ -87,6 +87,7 @@ function start(services: string[], options: StudioStartOptions) {
   log.info('Successfully started containers')
   log.info(`Visit chronos1 at https://chronos1.${projectID}.localhost`)
   log.info(`Visit chronos at https://chronos.${projectID}.localhost`)
+  log.info(`Visit illustry at https://illustry.${projectID}.localhost`)
 }
 
 function stop(services: string[], options: StudioStartOptions) {
@@ -114,6 +115,9 @@ function folderIsValidProject(folder: string): boolean {
 }
 
 function getDefaultDockerComposeFormFolderProject(folder: string): string {
+  const composeFile = JSON.parse(fs.readFileSync(path.resolve(folder, DXW_STUDIO_PROJECT_METADATA_FILE)).toString()).composeFile
+  if(composeFile) return composeFile
+  // if the compose file is not in the project description file, return the legacy compose file
   return path.resolve(folder, 'chronos', 'docker-compose.yml')
 }
 

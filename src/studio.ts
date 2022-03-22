@@ -6,7 +6,8 @@ import {_package} from './utils'
 import {studioList} from './commands/list'
 import * as fs from 'fs'
 import {studioFolder} from './constants'
-import {studioStart, studioStop, studioUpdate} from './commands/start-stop-pull'
+import {studioStart, studioStop} from './commands/start-stop'
+import {studioUpdate} from './commands/update'
 
 fs.mkdirSync(studioFolder, {recursive: true})
 

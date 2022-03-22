@@ -42,7 +42,7 @@
     "dev": "ts-node src/index.ts"
   },
   "dependencies": {
-    "@dxworks/cli-common": "^0.0.20",
+    "@dxworks/cli-common": "^0.0.26",
     "@dxworks/ktextensions": "^0.1.0",
     "chalk": "^4.1.2",
     "cli-progress": "^3.9.1",
@@ -53,7 +53,8 @@
     "get-port": "^5.1.1",
     "inquirer": "^8.2.0",
     "octokit": "^1.6.2",
-    "string-template": "^1.0.0"
+    "string-template": "^1.0.0",
+    "yaml": "^1.10.2"
   },
   "devDependencies": {
     "@types/cli-progress": "^3.9.2",

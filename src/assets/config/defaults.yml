@@ -1,0 +1,6 @@
+domain: localhost
+chronosTag: latest
+chronos1Tag: latest
+#chronosDockerRegistry: string
+network: traefiknet
+illustryTag: latest

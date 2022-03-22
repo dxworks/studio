@@ -13,7 +13,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.{projectID}-chronos2.entrypoints=web,web-secured
-      - traefik.http.routers.{projectID}-chronos2.rule=Host(`chronos.{projectID}.localhost`)
+      - traefik.http.routers.{projectID}-chronos2.rule=Host(`chronos.{projectID}.{domain}`)
       - traefik.http.middlewares.chronospathstrip.stripprefix.prefixes=/chronos
       - traefik.http.middlewares.chronospathadd.addprefix.prefix=/chronos
       - traefik.http.routers.{projectID}-chronos2.middlewares=chronospathstrip@docker,chronospathadd@docker
@@ -35,7 +35,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.{projectID}-chronos1.entrypoints=web,web-secured
-      - traefik.http.routers.{projectID}-chronos1.rule=Host(`chronos1.{projectID}.localhost`)
+      - traefik.http.routers.{projectID}-chronos1.rule=Host(`chronos1.{projectID}.{domain}`)
       - traefik.http.middlewares.chronos1pathstrip.stripprefix.prefixes=/chronos
       - traefik.http.middlewares.chronos1pathadd.addprefix.prefix=/chronos
       - traefik.http.routers.{projectID}-chronos1.middlewares=chronos1pathstrip@docker,chronos1pathadd@docker
@@ -75,13 +75,13 @@ services:
       - {network}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.illustry.entrypoints=web,web-secured
-      - traefik.http.routers.illustry.rule=Host(`illustry.{projectID}.localhost`)
-      - traefik.http.routers.illustry.service=illustry
-      - traefik.http.services.illustry.loadbalancer.server.port=7000
+      - traefik.http.routers.{projectID}-illustry.entrypoints=web,web-secured
+      - traefik.http.routers.{projectID}-illustry.rule=Host(`illustry.{projectID}.{domain}`)
+      - traefik.http.routers.{projectID}-illustry.service={projectID}-illustry
+      - traefik.http.services.{projectID}-illustry.loadbalancer.server.port=7000
       - traefik.docker.network={network}
-      - traefik.http.routers.illustry.tls=true
-      - traefik.http.routers.illustry.tls.certresolver=default
+      - traefik.http.routers.{projectID}-illustry.tls=true
+      - traefik.http.routers.{projectID}-illustry.tls.certresolver=default
 
 networks:
   {network}:
